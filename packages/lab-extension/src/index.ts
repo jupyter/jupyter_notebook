@@ -30,7 +30,7 @@ import {
 } from '@jupyterlab/ui-components';
 
 /**
- * The command IDs used by the application plugin.
+ * The command IDs used by the application plugin
  */
 namespace CommandIDs {
   /**
