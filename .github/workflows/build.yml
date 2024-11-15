@@ -167,6 +167,51 @@ jobs:
           jupyter notebook --version
           jupyter notebook --help
 
+  install-brew:
+    needs: [build]
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - name: Install Python
+        run: |
+          sudo mkdir -p /opt/homebrew
+          sudo chown -R $(whoami) /opt/homebrew
+          sudo chown -R $(whoami) /opt
+          echo 'export HOMEBREW_PREFIX=/opt/homebrew'
+          echo 'export PATH="/opt/homebrew/bin:$PATH"' >> $GITHUB_ENV
+          sudo mv /usr/local/* /opt/homebrew/
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" --prefix=/opt/homebrew
+          ls -a /opt/homebrew
+          brew update
+          brew install python@3.11
+          DIR="/opt/homebrew/bin/python3.11"; [ -d "$DIR" ] && echo '$DIR directory exists.'
+      - uses: actions/download-artifact@v3
+        with:
+          name: notebook-dist-${{ github.run_number }}
+          path: ./dist
+      - name: Install the prerequisites
+        run: |
+          which python3
+          python3 -m pip install -U pip wheel
+      - name: Install the package
+        run: |
+          cd dist
+          which python3
+          python3 -m pip install -vv notebook*.whl
+      - name: Validate environment
+        run: |
+          which python3
+          python3 -m pip freeze
+          python3 -m pip check
+      - name: Validate the install
+        run: |
+          jupyter labextension list
+          jupyter labextension list 2>&1 | grep -ie "@jupyter-notebook/lab-extension.*enabled.*ok" -
+          jupyter server extension list
+          jupyter server extension list 2>&1 | grep -ie "notebook.*enabled" -
+          jupyter notebook --version
+          jupyter notebook --help
+
   check_links:
     runs-on: ubuntu-latest
     timeout-minutes: 10
