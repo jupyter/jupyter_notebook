@@ -16,6 +16,8 @@ import { jupyterIcon } from '@jupyter-notebook/ui-components';
 
 import * as React from 'react';
 
+from platform import python_version /* to print Python version it is running on */
+
 /**
  * A list of resources to show in the help menu.
  */
@@ -119,10 +121,12 @@ const about: JupyterFrontEndPlugin<void> = {
           </span>
         );
         const version = trans.__('Version: %1', app.version);
+        const py_version = trans.__('Python version: %1', app.python_version());
         const copyright = trans.__('© 2021-2023 Jupyter Notebook Contributors');
         const body = (
           <>
             <span className="jp-AboutNotebook-version">{version}</span>
+            <span className="jp-AboutNotebook-python-version">{py_version}</span>
             <div>{externalLinks}</div>
             <span className="jp-AboutNotebook-about-copyright">
               {copyright}
