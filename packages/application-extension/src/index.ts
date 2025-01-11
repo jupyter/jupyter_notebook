@@ -205,13 +205,21 @@ const opener: JupyterFrontEndPlugin<void> = {
   ): void => {
     const { commands, docRegistry } = app;
 
+    const ignoredPattern = new RegExp('/tree/(.*)');
+    const pathSegmentPattern = new RegExp('\\bnotebooks\\b|\\bedit\\b');
     const command = 'router:tree';
     commands.addCommand(command, {
       execute: (args: any) => {
         const parsed = args as IRouter.ILocation;
         const matches = parsed.path.match(TREE_PATTERN) ?? [];
+
         const [, , path] = matches;
         if (!path) {
+          return;
+        }
+
+        const pathSegments: string[] = parsed.path.split(pathSegmentPattern);
+        if (pathSegments.length > 1 && pathSegments[0].match(ignoredPattern)) {
           return;
         }
 

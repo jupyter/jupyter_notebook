@@ -33,13 +33,16 @@ const opener: JupyterFrontEndPlugin<void> = {
   ) => {
     const { commands } = app;
     const terminalPattern = new RegExp('/terminals/(.*)');
+    const ignoreTreePattern = new RegExp('/(tree|notebooks|edit)/(.*)');
 
     const command = 'router:terminal';
     commands.addCommand(command, {
       execute: (args: any) => {
         const parsed = args as IRouter.ILocation;
         const matches = parsed.path.match(terminalPattern);
-        if (!matches) {
+        const isTreeMatch = parsed.path.match(ignoreTreePattern);
+
+        if (isTreeMatch || !matches) {
           return;
         }
         const [, name] = matches;
