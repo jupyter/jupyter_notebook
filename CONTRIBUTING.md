@@ -1,6 +1,6 @@
 # Contributing to Jupyter Notebook
 
-Thanks for contributing to Jupyter Notebook!
+Thanks for showing interest on contributing to Jupyter Notebook!
 
 Make sure to follow [Project Jupyter's Code of Conduct](https://github.com/jupyter/governance/blob/master/conduct/code_of_conduct.md)
 for a friendly and welcoming collaborative environment.
@@ -35,7 +35,7 @@ jlpm develop
 jupyter server extension enable notebook
 ```
 
-`notebook` follows a monorepo structure. To build all the packages at once:
+`notebook` follows a monorepo structure. To build all the packages at once use:
 
 ```bash
 jlpm build
@@ -72,7 +72,7 @@ jupyter notebook
 
 ### Local changes in Notebook dependencies
 
-The development installation described above fetches JavaScript dependencies from [npmjs](https://www.npmjs.com/),
+The developmental installations described above fetches JavaScript dependencies from [npmjs](https://www.npmjs.com/),
 according to the versions in the _package.json_ file.
 However, it is sometimes useful to be able to test changes in Notebook, with dependencies (e.g. `@jupyterlab` packages) that have not yet
 been published.
@@ -92,7 +92,7 @@ Notebook, acting as a local package repository.
     With the previous example, it would be `yalc add @jupyterlab/ui-components`.
   - Notebook is a monerepo, so we want this dependency to be 'linked' as a resolution (for all sub-packages) instead
     of a dependency.\
-    The easiest way is to manually move the new entry in _package.json_ from _dependencies_ to _resolutions_.
+    The easiest way is to do it is manually move the new entry in _package.json_ from _dependencies_ to _resolutions_.
   - Build Notebook with the local dependency:\
     `jlpm install && jlpm build`
 
@@ -199,8 +199,8 @@ You can invoke the pre-commit hook by hand at any time with:
 pre-commit run
 ```
 
-which should run any autoformatting on your code
-and tell you about any errors it couldn't fix automatically.
+Which should run any autoformatting on your code
+and tell you about any errors that it couldn't fix automatically.
 You may also install [black integration](https://github.com/psf/black#editor-integration)
 into your text editor to format code automatically.
 
